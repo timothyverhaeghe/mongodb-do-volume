@@ -64,7 +64,13 @@ mongod --config /etc/mongod.conf
 Command line 2:
 ```js
 user {DATABASE}
+// Just read/write
+db.createUser({user:"{USERNAME}", pwd:"{PASSWORD}", roles:["readWrite","dbAdmin"]})
+
+// Admin:
 db.createUser({user:"{USERNAME}", pwd:"{PASSWORD}", roles:["readWrite","clusterAdmin","readAnyDatabase"]})
+
+// Test
 db.auth("{USERNAME}", "{PASSWORD}"); // if worked returns 1 ortherwise error
 ```
 
@@ -74,11 +80,21 @@ db.auth("{USERNAME}", "{PASSWORD}"); // if worked returns 1 ortherwise error
 ```
 
 ## Step 9: Connect
+Connect with mongoose
 ```js
   // (mongo) mongodb://{USERNAME}:{PASSWORD}@{IP}:{PORT:27017}/{DATABASE}
-  mongodb://admin_user:1234@139.59.215.224:27017/admin
+  mongoose.connect("mongodb://admin_user:1234@139.59.215.224:27017/admin");
 ```
 
+Connect in shell
+```js
+  mongo mongodb://admin_user:1234@139.59.215.224:27017/admin
+```
+
+Connect on localhost
+```js
+  mongo admin -u {USERNAME} -p {PASSWORD}
+```
 
 ## Todo:
 // start firewall => sudo ufw enable
